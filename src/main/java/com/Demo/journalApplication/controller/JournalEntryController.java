@@ -1,6 +1,8 @@
 package com.Demo.journalApplication.controller;
 
-import com.Demo.journalApplication.JournalEntry;
+import com.Demo.journalApplication.entitiy.JournalEntry;
+import com.Demo.journalApplication.service.JournalEntryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -9,10 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/journal")
+@RequestMapping("/_journal")
 public class JournalEntryController {
 
     private final Map<Long, JournalEntry> journalEntries = new HashMap<>();
+    @Autowired
+    private JournalEntryService journalEntryService;
 
     @GetMapping()
     public List<JournalEntry> getAll() {
@@ -20,8 +24,8 @@ public class JournalEntryController {
     }
 
     @PostMapping
-    public boolean createENtry(@RequestBody JournalEntry myEntry) {
-        journalEntries.put(myEntry.getId(), myEntry);
+    public boolean createEntry(@RequestBody JournalEntry myEntry) {
+        journalEntryService.saveEntry(myEntry);
         return true;
     }
 
