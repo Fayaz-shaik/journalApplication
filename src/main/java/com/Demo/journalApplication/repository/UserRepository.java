@@ -1,11 +1,12 @@
 package com.Demo.journalApplication.repository;
 
-import com.Demo.journalApplication.entitiy.UserEntity;
+import com.Demo.journalApplication.entitiy.User;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface UserRepository extends MongoRepository<UserEntity, ObjectId> {
+public interface UserRepository extends MongoRepository<User, ObjectId> {
 
-	UserEntity findByUserName(String userName);
-	UserEntity deleteByUserName(String userName);
+	User findByUserName(String userName);
+	User deleteByUserName(String userName);
 }

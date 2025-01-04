@@ -1,6 +1,6 @@
 package com.Demo.journalApplication.controller;
 
-import com.Demo.journalApplication.entitiy.UserEntity;
+import com.Demo.journalApplication.entitiy.User;
 import com.Demo.journalApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class PublicController {
 	}
 
 	@PostMapping("/create-user")
-	public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user){
+	public ResponseEntity<User> createUser(@RequestBody User user){
 		try {
 			userService.saveNewEntry(user);
 			return new ResponseEntity<>(user, HttpStatus.CREATED);

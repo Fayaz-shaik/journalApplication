@@ -1,7 +1,7 @@
 package com.Demo.journalApplication.controller;
 
 import com.Demo.journalApplication.entitiy.JournalEntry;
-import com.Demo.journalApplication.entitiy.UserEntity;
+import com.Demo.journalApplication.entitiy.User;
 import com.Demo.journalApplication.service.JournalEntryService;
 import com.Demo.journalApplication.service.UserService;
 import org.bson.types.ObjectId;
@@ -32,7 +32,7 @@ public class JournalEntryController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
 
-        UserEntity user = userService.findByUserName(userName);
+        User user = userService.findByUserName(userName);
         if(user==null){
             return new ResponseEntity<>("User is not Found. Provide proper user",HttpStatus.BAD_REQUEST);
         }
@@ -96,7 +96,7 @@ public class JournalEntryController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
 
-        UserEntity user = userService.findByUserName(userName);
+		User user = userService.findByUserName(userName);
         List<JournalEntry> journalsByUser = userService.findJournalsByUser(userName);
 
         List<JournalEntry> journalEntry = journalsByUser.stream().filter(x -> x.getId().equals(myId)).toList();

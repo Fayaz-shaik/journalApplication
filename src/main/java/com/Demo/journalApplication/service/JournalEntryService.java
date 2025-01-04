@@ -2,7 +2,7 @@ package com.Demo.journalApplication.service;
 
 
 import com.Demo.journalApplication.entitiy.JournalEntry;
-import com.Demo.journalApplication.entitiy.UserEntity;
+import com.Demo.journalApplication.entitiy.User;
 import com.Demo.journalApplication.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class JournalEntryService {
     @Transactional
     public void saveEntry(JournalEntry journalEntry,String userName){
 
-            UserEntity user = userService.findByUserName(userName);
+            User user = userService.findByUserName(userName);
             journalEntry.setDate(LocalDateTime.now());
             JournalEntry saved = journalEntryRepository.save(journalEntry);
             user.getJournals().add(saved);
@@ -53,7 +53,7 @@ public class JournalEntryService {
         return journalEntryRepository.findById(id).orElse(null);
     }
     public void deleteById(ObjectId id,String userName){
-        UserEntity user = userService.findByUserName(userName);
+        User user = userService.findByUserName(userName);
         user.getJournals().removeIf(x -> x.getId().equals(id));
         user.setDate(LocalDateTime.now());
         userService.saveUser(user);

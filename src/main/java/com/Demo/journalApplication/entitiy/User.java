@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class User {
 
 	@Id
 	private ObjectId id;

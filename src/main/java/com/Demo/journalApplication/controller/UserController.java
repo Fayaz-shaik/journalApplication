@@ -1,6 +1,6 @@
 package com.Demo.journalApplication.controller;
 
-import com.Demo.journalApplication.entitiy.UserEntity;
+import com.Demo.journalApplication.entitiy.User;
 import com.Demo.journalApplication.repository.UserRepository;
 import com.Demo.journalApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class UserController {
 	public UserService userService;
 
 	@GetMapping()
-	public ResponseEntity<List<UserEntity>> getAllUsers(){
-		List<UserEntity> allUsers = userService.getAll();
+	public ResponseEntity<List<User>> getAllUsers(){
+		List<User> allUsers = userService.getAll();
 		if(allUsers.isEmpty()){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -33,12 +33,12 @@ public class UserController {
 
 
 	@PutMapping()
-	public ResponseEntity<?> updateUser(@RequestBody UserEntity user){
+	public ResponseEntity<?> updateUser(@RequestBody User user){
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userName = authentication.getName();
 
-		UserEntity existingUser = userService.findByUserName(userName);
+		User existingUser = userService.findByUserName(userName);
 
 		existingUser.setUserName(user.getUserName());
 		existingUser.setPassword(user.getPassword());

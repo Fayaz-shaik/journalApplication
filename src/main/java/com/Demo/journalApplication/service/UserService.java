@@ -1,7 +1,7 @@
 package com.Demo.journalApplication.service;
 
 import com.Demo.journalApplication.entitiy.JournalEntry;
-import com.Demo.journalApplication.entitiy.UserEntity;
+import com.Demo.journalApplication.entitiy.User;
 import com.Demo.journalApplication.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class UserService {
 
 	Logger log;
 
-	public void saveUser(UserEntity userEntity){
+	public void saveUser(User userEntity){
 		try {
 			userEntity.setDate(LocalDateTime.now());
 			userRepository.save(userEntity);
@@ -34,7 +34,7 @@ public class UserService {
 		}
 	}
 
-	public void saveNewEntry(UserEntity userEntity){
+	public void saveNewEntry(User userEntity){
 		try {
 			userEntity.setDate(LocalDateTime.now());
 			userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
@@ -47,22 +47,25 @@ public class UserService {
 		}
 	}
 
-	public List<UserEntity> getAll(){
+	public List<User> getAll(){
 		return userRepository.findAll();
 	}
-	public Optional<UserEntity> findById(ObjectId id){
+	public Optional<User> findById(ObjectId id){
 		return userRepository.findById(id);
 	}
 	public void deleteById(ObjectId id){
 		userRepository.deleteById(id);
 	}
 
-	public UserEntity findByUserName(String userName) {
+	public User findByUserName(String userName) {
 		return userRepository.findByUserName(userName);
 	}
 
 	public List<JournalEntry> findJournalsByUser(String userName){
-		UserEntity user = userRepository.findByUserName(userName);
+		User user = userRepository.findByUserName(userName);
 		return user.getJournals();
+	}
+
+	public void saveAdminUser(User user) {
 	}
 }
