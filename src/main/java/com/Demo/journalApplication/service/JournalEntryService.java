@@ -4,6 +4,7 @@ package com.Demo.journalApplication.service;
 import com.Demo.journalApplication.entitiy.JournalEntry;
 import com.Demo.journalApplication.entitiy.User;
 import com.Demo.journalApplication.repository.JournalEntryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Component
 public class JournalEntryService {
 
@@ -21,7 +23,7 @@ public class JournalEntryService {
 
     @Autowired
     private UserService userService;
-    Logger log;
+
 
     @Transactional
     public void saveEntry(JournalEntry journalEntry,String userName){

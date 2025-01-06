@@ -4,6 +4,7 @@ import com.Demo.journalApplication.entitiy.JournalEntry;
 import com.Demo.journalApplication.entitiy.User;
 import com.Demo.journalApplication.service.JournalEntryService;
 import com.Demo.journalApplication.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +17,11 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/journal")
 public class JournalEntryController {
 
-//    private final Map<Long, JournalEntry> journalEntries = new HashMap<>();
     @Autowired
     private JournalEntryService journalEntryService;
     @Autowired
@@ -51,7 +52,7 @@ public class JournalEntryController {
             return new ResponseEntity<>(myEntry, HttpStatus.CREATED);
         }
         catch (Exception e){
-            System.out.println("Exception logs : "+e);
+			log.error("Error Log : ",e);
             return new ResponseEntity<>("Some Error Occured in Creating Journal Entry",HttpStatus.BAD_REQUEST);
 
         }
@@ -86,6 +87,7 @@ public class JournalEntryController {
 			journalEntryService.deleteById(myId, userName);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} else {
+			log.info("Journal Entry not found with ID : "+myId);
 			return new ResponseEntity<>("Respective Journal is not associated with the User. Journal ID : "+myId,HttpStatus.NOT_FOUND);
 		}
 	}
@@ -102,6 +104,7 @@ public class JournalEntryController {
         List<JournalEntry> journalEntry = journalsByUser.stream().filter(x -> x.getId().equals(myId)).toList();
 
 		if (journalEntry.isEmpty()) {
+			log.info("Journal Entry not found with Journal ID : "+myId);
 			return new ResponseEntity<>("No Journal Entry Found with respective Journal ID : "+myId,HttpStatus.NOT_FOUND);
 		}
         JournalEntry old = journalEntry.getFirst();
